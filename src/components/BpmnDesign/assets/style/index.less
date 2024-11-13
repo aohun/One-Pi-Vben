@@ -1,0 +1,366 @@
+/* 背景网格 */
+.djs-container {
+  background-image: linear-gradient(90deg, hsl(0deg 0% 78.4% / 15%) 10%, transparent 0),
+    linear-gradient(hsl(0deg 0% 78.4% / 15%) 10%, transparent 0) !important;
+  background-size: 10px 10px !important;
+}
+
+// 不显示"打开/关闭小地图"  通过菜单栏控制
+.djs-minimap .toggle {
+  display: none;
+}
+
+// .toggle设置none后会有一个小点(2px) 通过这里去掉
+.djs-minimap:not(.open) {
+  display: none;
+}
+
+// 不显示左边的流程模拟(没法汉化)
+.bts-toggle-mode {
+  display: none;
+}
+
+// 适配2k+屏幕  自动宽度会导致遮挡
+// css 不加任何分隔符 代表两个都要拥有
+.djs-palette.open {
+  max-width: 100px;
+}
+
+.bpmn-icon {
+  /** 
+  创建数据对象引用
+  创建数据存储引用
+  创建组
+  */
+  &-data-object,
+  &-data-store,
+  &-group {
+    display: none;
+  }
+}
+
+/** bpmn父级div */
+.bpmn-page {
+  width: 100%;
+  height: 100%;
+}
+
+/** 字体和夜间模式下的颜色 */
+html[data-theme='light'] {
+  /** 双击编辑元素时样式保持一致 */
+  div.djs-direct-editing-parent {
+    border-radius: 10px;
+    background-color: transparent !important;
+    color: #222;
+  }
+
+  .djs-visual {
+    .djs-label {
+      fill: #222 !important;
+      font-size: 12px !important;
+    }
+  }
+
+  /** 拖动元素时 背景 */
+  svg.new-parent {
+    /** mixin */
+    .djs-container();
+  }
+}
+
+/** 线条的颜色 */
+@stroke-color-dark: white;
+
+/** 夜间模式 字体颜色 */
+@bpmn-font-color-dark: white;
+
+html[data-theme='dark'] {
+  /** 元素相关设置 */
+  .djs-visual {
+    /** 元素边框 需要去除文字(.djs-label) */
+    & > *:first-child:not(.djs-label) {
+      stroke: @stroke-color-dark !important;
+    }
+
+    /** 文字 */
+    .djs-label {
+      fill: @bpmn-font-color-dark !important;
+      font-size: 12px !important;
+    }
+
+    /* 连接线样式 */
+    path[data-corner-radius] {
+      stroke: @stroke-color-dark !important;
+      marker-end: url('#markerArrow-dark-mode') !important;
+    }
+  }
+
+  /** 双击编辑元素时样式保持一致 */
+  div.djs-direct-editing-parent {
+    border-radius: 10px;
+    background-color: transparent !important;
+    color: @bpmn-font-color-dark;
+  }
+
+  /** 拖动元素时 背景 */
+  svg.new-parent {
+    background-color: black !important;
+
+    /** mixin */
+    .djs-container();
+  }
+
+  /** 元素(用户任务等)点击后属性面板的背景色 */
+  .djs-context-pad .entry {
+    background-color: #333 !important;
+  }
+
+  /** 泳池/泳道 */
+  rect.djs-hit.djs-hit-no-move {
+    fill: #333 !important;
+  }
+}
+
+.djs-palette {
+  width: 300px;
+
+  .bpmn-icon-hand-tool:hover {
+    &::after {
+      content: '启动手动工具';
+      position: absolute;
+      left: 45px;
+      width: 120px;
+      border: 1px solid #ccc;
+      border-radius: 2px;
+      opacity: 0.8;
+      background-color: #fafafa;
+      color: #3a84de;
+      font-size: 15px;
+      font-weight: bold;
+    }
+  }
+
+  .bpmn-icon-lasso-tool:hover {
+    &::after {
+      content: '启动套索工具';
+      position: absolute;
+      left: 100px;
+      width: 120px;
+      border: 1px solid #ccc;
+      border-radius: 2px;
+      opacity: 0.8;
+      background-color: #fafafa;
+      color: #3a84de;
+      font-size: 15px;
+      font-weight: bold;
+    }
+  }
+
+  .bpmn-icon-space-tool:hover {
+    &::after {
+      content: '启动创建/删除空间工具';
+      position: absolute;
+      left: 45px;
+      width: 170px;
+      border: 1px solid #ccc;
+      border-radius: 2px;
+      opacity: 0.8;
+      background-color: #fafafa;
+      color: #3a84de;
+      font-size: 15px;
+      font-weight: bold;
+    }
+  }
+
+  .bpmn-icon-connection-multi:hover {
+    &::after {
+      content: '启动全局连接工具';
+      position: absolute;
+      left: 100px;
+      width: 140px;
+      border: 1px solid #ccc;
+      border-radius: 2px;
+      opacity: 0.8;
+      background-color: #fafafa;
+      color: #3a84de;
+      font-size: 15px;
+      font-weight: bold;
+    }
+  }
+
+  .bpmn-icon-start-event-none:hover {
+    &::after {
+      content: '创建开始事件';
+      position: absolute;
+      left: 45px;
+      width: 120px;
+      border: 1px solid #ccc;
+      border-radius: 2px;
+      opacity: 0.8;
+      background-color: #fafafa;
+      color: #3a84de;
+      font-size: 15px;
+      font-weight: bold;
+    }
+  }
+
+  .bpmn-icon-intermediate-event-none:hover {
+    &::after {
+      content: '创建中间/边界事件';
+      position: absolute;
+      left: 100px;
+      width: 140px;
+      border: 1px solid #ccc;
+      border-radius: 2px;
+      opacity: 0.8;
+      background-color: #fafafa;
+      color: #3a84de;
+      font-size: 15px;
+      font-weight: bold;
+    }
+  }
+
+  .bpmn-icon-end-event-none:hover {
+    &::after {
+      content: '创建结束事件';
+      position: absolute;
+      left: 45px;
+      width: 120px;
+      border: 1px solid #ccc;
+      border-radius: 2px;
+      opacity: 0.8;
+      background-color: #fafafa;
+      color: #3a84de;
+      font-size: 15px;
+      font-weight: bold;
+    }
+  }
+
+  .bpmn-icon-gateway-none:hover {
+    &::after {
+      content: '创建网关';
+      position: absolute;
+      left: 100px;
+      width: 90px;
+      border: 1px solid #ccc;
+      border-radius: 2px;
+      opacity: 0.8;
+      background-color: #fafafa;
+      color: #3a84de;
+      font-size: 15px;
+      font-weight: bold;
+    }
+  }
+
+  .bpmn-icon-gateway-parallel:hover {
+    &::after {
+      content: '创建并行网关';
+      position: absolute;
+      left: 45px;
+      width: 120px;
+      border: 1px solid #ccc;
+      border-radius: 2px;
+      opacity: 0.8;
+      background-color: #fafafa;
+      color: #3a84de;
+      font-size: 15px;
+      font-weight: bold;
+    }
+  }
+
+  .bpmn-icon-gateway-eventbased:hover {
+    &::after {
+      content: '创建事件网关';
+      position: absolute;
+      left: 100px;
+      width: 120px;
+      border: 1px solid #ccc;
+      border-radius: 2px;
+      opacity: 0.8;
+      background-color: #fafafa;
+      color: #3a84de;
+      font-size: 15px;
+      font-weight: bold;
+    }
+  }
+
+  .bpmn-icon-task:hover {
+    &::after {
+      content: '创建任务';
+      position: absolute;
+      left: 45px;
+      width: 80px;
+      border: 1px solid #ccc;
+      border-radius: 2px;
+      opacity: 0.8;
+      background-color: #fafafa;
+      color: #3a84de;
+      font-size: 15px;
+      font-weight: bold;
+    }
+  }
+
+  .bpmn-icon-subprocess-expanded:hover {
+    &::after {
+      content: '创建可折叠子流程';
+      position: absolute;
+      left: 100px;
+      width: 140px;
+      border: 1px solid #ccc;
+      border-radius: 2px;
+      opacity: 0.8;
+      background-color: #fafafa;
+      color: #3a84de;
+      font-size: 15px;
+      font-weight: bold;
+    }
+  }
+
+  .bpmn-icon-user-task:hover {
+    &::after {
+      content: '创建用户任务';
+      position: absolute;
+      left: 45px;
+      width: 120px;
+      border: 1px solid #ccc;
+      border-radius: 2px;
+      opacity: 0.8;
+      background-color: #fafafa;
+      color: #3a84de;
+      font-size: 15px;
+      font-weight: bold;
+    }
+  }
+
+  .task-multi-instance:hover {
+    &::after {
+      content: '创建多实例用户任务';
+      position: absolute;
+      left: 100px;
+      width: 160px;
+      border: 1px solid #ccc;
+      border-radius: 2px;
+      opacity: 0.8;
+      background-color: #fafafa;
+      color: #3a84de;
+      font-size: 15px;
+      font-weight: bold;
+    }
+  }
+
+  .bpmn-icon-participant:hover {
+    &::after {
+      content: '创建泳池/泳道';
+      position: absolute;
+      left: 45px;
+      width: 120px;
+      border: 1px solid #ccc;
+      border-radius: 2px;
+      opacity: 0.8;
+      background-color: #fafafa;
+      color: #3a84de;
+      font-size: 15px;
+      font-weight: bold;
+    }
+  }
+}
